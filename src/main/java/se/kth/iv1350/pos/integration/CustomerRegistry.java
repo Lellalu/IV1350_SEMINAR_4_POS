@@ -1,14 +1,17 @@
 package se.kth.iv1350.pos.integration;
 
 /**
-* This is the CustomerRegistry class in the integration to contain all customerDTOs.
+* A Singleton CustomerRegistry that creates customerRegistry instances containing all customerDTOs.
+* The constructor is private, meaning that all other classes can only get
+* CustomerRegistry by calling getCustomerRegistry, thus ensuring that only one
+* CustomerRegistry is used in all other classes.
 */
 public class CustomerRegistry {
     private static final CustomerRegistry customerRegistry = new CustomerRegistry();
     private  CustomerDTO[] customers;
 
     /**
-    * @return The only instance of this singleton.
+    * @return Get the CustomerRegistry, which is a singleton.
     */
     public static CustomerRegistry getCustomerRegistry() { 
         return customerRegistry;

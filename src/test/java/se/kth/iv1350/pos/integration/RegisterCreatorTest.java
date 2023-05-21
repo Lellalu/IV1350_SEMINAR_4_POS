@@ -29,9 +29,4 @@ public class RegisterCreatorTest {
     public void testGetDiscountRegistry(){
         assertEquals("getDiscountRegistry() returned wrong type",registerCreator.getDiscountRegistry().getClass(), DiscountRegistry.class);
     }
-
-    @Test
-    public void getCustomerRegistry(){
-        assertEquals("getCustomerRegistry() returned wrong type",registerCreator.getCustomerRegistry().getClass(), CustomerRegistry.class);
-    }
 }

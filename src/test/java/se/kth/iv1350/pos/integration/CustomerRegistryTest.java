@@ -6,11 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CustomerRegistryTest {
-    private static CustomerRegistry customerRegistry= new CustomerRegistry();
+    private static CustomerRegistry customerRegistry;
 
     @Before
     public void setUp(){
-        customerRegistry = new CustomerRegistry();
+        customerRegistry = CustomerRegistry.getCustomerRegistry();
     }
 
     @After

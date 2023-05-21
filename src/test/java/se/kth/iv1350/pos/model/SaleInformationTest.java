@@ -28,7 +28,6 @@ public class SaleInformationTest {
         saleInformation = new SaleInformation();
         externalInventorySystem = new ExternalInventorySystem();
         discountRegistry = new DiscountRegistry();
-        customerRegistry = new CustomerRegistry();
         
         saleInformation.addItem(420101, 1, externalInventorySystem);
         saleInformation.addItem(520001, 2, externalInventorySystem);
@@ -65,14 +64,14 @@ public class SaleInformationTest {
     public void testIncludeDiscount(){
         int customerId = 1234;
         double totalPrice = 110;
-        CustomerDTO costumer = customerRegistry.findCustomerById(customerId);
+        CustomerDTO costumer = CustomerRegistry.getCustomerRegistry().findCustomerById(customerId);
         DiscountDTO[] expectedDiscounts = discountRegistry.findDiscount(costumer);
         double expectedPriceAfterDiscount = totalPrice;
         for (DiscountDTO expectedDiscount : expectedDiscounts){
             expectedPriceAfterDiscount *= expectedDiscount.getType();
         }
 
-        double actualPriceAfterDiscount = saleInformation.includeDiscount(costumer.getId(), discountRegistry, customerRegistry);
+        double actualPriceAfterDiscount = saleInformation.includeDiscount(costumer.getId(), discountRegistry);
         assertEquals("IncludeDiscount() calculated wrong price after discount",expectedPriceAfterDiscount, actualPriceAfterDiscount, 1e-9);
     }   
 
