@@ -1,3 +1,3 @@
-Total revenue = 280.0
-Total revenue = 559.0
-Total revenue = 695.0
+Total revenue = 240.0
+Total revenue = 613.5
+Total revenue = 691.7

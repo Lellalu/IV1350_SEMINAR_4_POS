@@ -13,7 +13,6 @@ public class RegisterCreator {
     private AccountingSystem accountingSystem;
     
     public RegisterCreator(){
-        customerRegistry = new CustomerRegistry();
         discountRegistry = new DiscountRegistry();
         externalInventorySystem = new ExternalInventorySystem();
         accountingSystem = new AccountingSystem();
@@ -35,13 +34,6 @@ public class RegisterCreator {
         return discountRegistry;
     }
 
-/**
-* Get customerRegistry of customer information.
-* @return customerRegistry It contains information of all customers.
-*/
-    public CustomerRegistry getCustomerRegistry(){
-        return customerRegistry;
-    }
 
 /**
 * Get external AccountingSystem.

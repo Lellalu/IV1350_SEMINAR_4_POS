@@ -18,7 +18,6 @@ public class Controller {
     private SaleInformation saleInformation;
     private ExternalInventorySystem externalInventorySystem;
     private DiscountRegistry discountRegistry;
-    private CustomerRegistry customerRegistry;
     private AccountingSystem accountingSystem;
     private Printer printer;
     private ArrayList<RevenueObserver> revenueObservers = new ArrayList<>();
@@ -31,7 +30,6 @@ public class Controller {
     public Controller (RegisterCreator registerCreator, Printer printer){
         this.externalInventorySystem = registerCreator.getItemRegistry();
         this.discountRegistry = registerCreator.getDiscountRegistry();
-        this.customerRegistry = registerCreator.getCustomerRegistry();
         this.accountingSystem = registerCreator.getAccountingSystem();
         this.printer = printer;
     }
@@ -74,7 +72,7 @@ public class Controller {
 */ 
     public double sendDiscountRequest (int customerId){
         double priceAfterDiscount = 0;
-        priceAfterDiscount = saleInformation.includeDiscount(customerId, discountRegistry, customerRegistry);
+        priceAfterDiscount = saleInformation.includeDiscount(customerId, discountRegistry);
         return priceAfterDiscount;
     }
 

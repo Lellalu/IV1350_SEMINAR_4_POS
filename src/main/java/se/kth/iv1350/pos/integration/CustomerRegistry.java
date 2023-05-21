@@ -4,9 +4,18 @@ package se.kth.iv1350.pos.integration;
 * This is the CustomerRegistry class in the integration to contain all customerDTOs.
 */
 public class CustomerRegistry {
+    private static final CustomerRegistry customerRegistry = new CustomerRegistry();
     private  CustomerDTO[] customers;
+
+    /**
+    * @return The only instance of this singleton.
+    */
+    public static CustomerRegistry getCustomerRegistry() { 
+        return customerRegistry;
+    }
+
     
-    public CustomerRegistry(){
+    private CustomerRegistry(){
         CustomerDTO customer_1 = new CustomerDTO(1234, 20, "SWE");
         CustomerDTO customer_2 = new CustomerDTO(5678, 100, "JAP");
         CustomerDTO customer_3 = new CustomerDTO(9012, 50, "DAN");

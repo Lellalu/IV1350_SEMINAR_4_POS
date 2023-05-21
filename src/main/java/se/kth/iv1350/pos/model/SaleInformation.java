@@ -102,8 +102,8 @@ public class SaleInformation {
 * @param customerId The int which will be entered for getting eligible discounts of the customer.
 * @return totalPrice The double of total price after that eligible discounts are applied.
 */ 
-    public double includeDiscount(int customerID, DiscountRegistry discountRegistry, CustomerRegistry customerRegistry){
-        CustomerDTO customerDTO = customerRegistry.findCustomerById(customerID);
+    public double includeDiscount(int customerID, DiscountRegistry discountRegistry){
+        CustomerDTO customerDTO = CustomerRegistry.getCustomerRegistry().findCustomerById(customerID);
         discounts = discountRegistry.findDiscount(customerDTO);
         uppdateSaleInformation();
         return totalPrice;
