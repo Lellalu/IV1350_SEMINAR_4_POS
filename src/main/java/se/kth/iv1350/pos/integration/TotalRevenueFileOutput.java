@@ -1,10 +1,12 @@
-package se.kth.iv1350.pos.view;
+package se.kth.iv1350.pos.integration;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-class TotalRevenueFileOutput extends RevenueDisplay{
+import se.kth.iv1350.pos.view.RevenueDisplay;
+
+public class TotalRevenueFileOutput extends RevenueDisplay{
     private PrintWriter logFile;
 
     public TotalRevenueFileOutput(String filename) throws IOException { 

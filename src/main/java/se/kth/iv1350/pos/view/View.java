@@ -10,6 +10,7 @@ import java.util.Random;
 import se.kth.iv1350.pos.controller.Controller;
 import se.kth.iv1350.pos.controller.Controller.InventoryFailException;
 import se.kth.iv1350.pos.model.SaleInformation.ItemNotFoundException;
+import se.kth.iv1350.pos.integration.TotalRevenueFileOutput;
 
 /**
 * This is the program's only View class, which is used for calling all the methods by cashier in controller.
@@ -19,6 +20,7 @@ public class View {
     private Controller controller;
     private ErrorMessageHandler errorMessageHandler;
     private LogHandler logHandler;
+    
 
 /**
 * Create the View.
