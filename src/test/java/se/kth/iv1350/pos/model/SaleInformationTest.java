@@ -20,7 +20,6 @@ public class SaleInformationTest {
     private SaleInformation saleInformation;
     private ExternalInventorySystem externalInventorySystem;
     private DiscountRegistry discountRegistry;
-    private CustomerRegistry customerRegistry;
 
 
     @Before

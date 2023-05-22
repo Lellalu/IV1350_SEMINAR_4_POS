@@ -9,6 +9,7 @@ import se.kth.iv1350.pos.integration.ExternalInventorySystem;
 import se.kth.iv1350.pos.integration.AccountingSystem;
 import se.kth.iv1350.pos.integration.CustomerRegistry;
 import se.kth.iv1350.pos.integration.RegisterCreator;
+import se.kth.iv1350.pos.integration.ExternalInventorySystem.DatabaseFailureException;
 import se.kth.iv1350.pos.model.SaleInformation;
 import se.kth.iv1350.pos.integration.Printer;
 import se.kth.iv1350.pos.model.Receipt;
@@ -57,13 +58,29 @@ public class Controller {
 * @param quantity The int number which will be entered by view.
 * @return saleInformation The new saleInformation uppdated with new entered items.
 * @throws ItemNotFoundException when the entered item identifier can not be found in inventory.
+* @throws InventoryFailException when the inventory database can not be reached.
 */
     public SaleInformation enterItem (int identifier, int quantity)
-        throws SaleInformation.ItemNotFoundException, ExternalInventorySystem.DatabaseFailureException{
-        saleInformation.addItem(identifier, quantity, externalInventorySystem);
-        saleInformation.uppdateSaleInformation();
+        throws SaleInformation.ItemNotFoundException, InventoryFailException{
+            try {
+                saleInformation.addItem(identifier, quantity, externalInventorySystem);
+                saleInformation.uppdateSaleInformation();
+                } 
+            catch(DatabaseFailureException e) { 
+                throw new InventoryFailException("Could not get the inventory for item " + Integer.toString(identifier));
+                }
+        
         return saleInformation;
     }
+
+/**
+* Thrown when database can not be called.
+*/
+public class InventoryFailException extends Exception { 
+    public InventoryFailException(String errorMessage) {
+        super(errorMessage);
+    }
+}
 
 /**
 * Apply discount request from view.
@@ -101,7 +118,7 @@ public void addSaleObserver(RevenueObserver revenueObserver) {
 
 private void notifyObservers() {
     for (RevenueObserver obs : revenueObservers) {
-            obs.completedSale(saleInformation);
+            obs.completedSale(saleInformation.getTotalPrice());
         }
 }
 

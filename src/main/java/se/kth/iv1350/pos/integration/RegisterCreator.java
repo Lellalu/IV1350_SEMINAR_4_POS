@@ -7,7 +7,6 @@ package se.kth.iv1350.pos.integration;
 * which can result in a better encapsulation and a lower coupling.
 */
 public class RegisterCreator {
-    private CustomerRegistry customerRegistry;
     private DiscountRegistry discountRegistry;
     private ExternalInventorySystem externalInventorySystem;
     private AccountingSystem accountingSystem;

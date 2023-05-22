@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import java.util.HashMap;
 
+import se.kth.iv1350.pos.controller.Controller.InventoryFailException;
 import se.kth.iv1350.pos.integration.ItemDTO;
 import se.kth.iv1350.pos.integration.RegisterCreator;
 import se.kth.iv1350.pos.integration.ExternalInventorySystem.DatabaseFailureException;
@@ -63,7 +64,7 @@ public class ControllerTest {
         } catch(ItemNotFoundException e)
         {
 
-        } catch(DatabaseFailureException e)
+        } catch(InventoryFailException e)
         {
             fail("Fail to reach the database for a non-existing item.");
         }
@@ -96,7 +97,7 @@ public class ControllerTest {
         } catch(ItemNotFoundException e)
         {
             fail("Could not find existing item: " + Integer.toString(chips.getId()));
-        } catch(DatabaseFailureException e)
+        } catch(InventoryFailException e)
         {
             fail("Fail to reach the database for item: " + Integer.toString(chips.getId()));
         }
@@ -110,7 +111,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void testSendDiscountRequest() throws ItemNotFoundException, DatabaseFailureException{
+    public void testSendDiscountRequest() throws ItemNotFoundException, InventoryFailException{
         int customerId = 1234;
 
         controller.startSale();
@@ -125,7 +126,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void testEndSale() throws ItemNotFoundException, DatabaseFailureException{
+    public void testEndSale() throws ItemNotFoundException, InventoryFailException{
         ItemDTO chips = new ItemDTO(520001, "OLW chips", "250g", 0.2, 30);
         int quantity = 3;
 

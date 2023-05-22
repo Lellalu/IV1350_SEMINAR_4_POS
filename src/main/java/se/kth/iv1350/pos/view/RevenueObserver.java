@@ -1,7 +1,5 @@
 package se.kth.iv1350.pos.view;
 
-import se.kth.iv1350.pos.model.SaleInformation;
-
 
 /**
 * A listener interface for receiving notifications about
@@ -16,8 +14,7 @@ public interface RevenueObserver {
 
     /**
      * called when a sale has been ended.
-     *
      * @param saleInformation The sale information of a sale.
     */
-    void completedSale(SaleInformation saleInformation);
+    void completedSale(double salePrice);
 }

@@ -1,7 +1,6 @@
 package se.kth.iv1350.pos.integration;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;

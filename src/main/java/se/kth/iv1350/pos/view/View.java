@@ -2,13 +2,13 @@ package se.kth.iv1350.pos.view;
 
 import se.kth.iv1350.pos.integration.ItemDTO;
 import se.kth.iv1350.pos.integration.LogHandler;
-import se.kth.iv1350.pos.integration.ExternalInventorySystem.DatabaseFailureException;
 import se.kth.iv1350.pos.integration.ErrorMessageHandler;
 
 import java.io.IOException;
 import java.util.Random;
 
 import se.kth.iv1350.pos.controller.Controller;
+import se.kth.iv1350.pos.controller.Controller.InventoryFailException;
 import se.kth.iv1350.pos.model.SaleInformation.ItemNotFoundException;
 
 /**
@@ -74,7 +74,7 @@ public class View {
             } catch (ItemNotFoundException e) {
                 this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(colaId) + " does not exist");
                 this.logHandler.log("The item " + Integer.toString(colaId) + " does not exist.");
-            } catch(DatabaseFailureException e){
+            } catch(InventoryFailException e){
                 this.errorMessageHandler.showErrorMsg("Fail to reach the database for item: " + Integer.toString(colaId));
                 this.logHandler.log("Fail to reach the databasefor item: " + Integer.toString(colaId));
             }
@@ -86,7 +86,7 @@ public class View {
             } catch (ItemNotFoundException e) {
                 this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(chipsId) + " does not exist.");
                 this.logHandler.log("The item " + Integer.toString(chipsId) + " does not exist.");
-            } catch(DatabaseFailureException e){
+            } catch(InventoryFailException e){
                 this.errorMessageHandler.showErrorMsg("Fail to reach the database for item: " + Integer.toString(chipsId));
                 this.logHandler.log("Fail to reach the database for item: " + Integer.toString(chipsId));
             }
@@ -98,7 +98,7 @@ public class View {
             } catch (ItemNotFoundException e) {
                 this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(glassId) + " does not exist.");
                 this.logHandler.log("The item " + Integer.toString(glassId) + " does not exist.");
-            } catch(DatabaseFailureException e){
+            } catch(InventoryFailException e){
                 this.errorMessageHandler.showErrorMsg("Fail to reach the database for item: " + Integer.toString(glassId));
                 this.logHandler.log("Fail to reach the database for item: " + Integer.toString(glassId));
             }
@@ -109,7 +109,7 @@ public class View {
             } catch (ItemNotFoundException e) {
                 this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(glassId) + " does not exist.");
                 this.logHandler.log("The item " + Integer.toString(glassId) + " does not exist.");
-            } catch(DatabaseFailureException e){
+            } catch(InventoryFailException e){
                 this.errorMessageHandler.showErrorMsg("Fail to reach the database for item: " + Integer.toString(glassId));
                 this.logHandler.log("Fail to reach the database for item: " + Integer.toString(glassId));
             }
@@ -120,18 +120,18 @@ public class View {
             } catch (ItemNotFoundException e) {
                 this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(nonExistId) + " does not exist.");
                 this.logHandler.log("The item " + Integer.toString(nonExistId) + " does not exist.");
-            } catch(DatabaseFailureException e){
+            } catch(InventoryFailException e){
                 this.errorMessageHandler.showErrorMsg("Fail to reach the database.");
                 this.logHandler.log("Fail to reach the database for item: " + Integer.toString(nonExistId));
             }
     
-            System.out.println("Try to simulate database failed to reach with item " + Integer.toString(failureId));
+            System.out.println("Try to simulate database failed to reach for item " + Integer.toString(failureId));
             try {
                 controller.enterItem(failureId, 1);
             } catch (ItemNotFoundException e) {
                 this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(failureId) + " does not exist.");
                 this.logHandler.log("The item " + Integer.toString(failureId) + " does not exist.");
-            } catch(DatabaseFailureException e){
+            } catch(InventoryFailException e){
                 this.errorMessageHandler.showErrorMsg("Fail to reach the database.");
                 this.logHandler.log("Fail to reach the database for item: " + Integer.toString(failureId));
             }

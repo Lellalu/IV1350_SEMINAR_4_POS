@@ -65,7 +65,8 @@ public class ExternalInventorySystemTest {
             fail("Did not catch DatabaseFailureException.");
         }
         catch (DatabaseFailureException e) {
-            assertTrue("Wrong item identifier for DatabaseFailureException" , e.getMessage().contains(Integer.toString(0)));
+            assertTrue("Wrong item identifier for DatabaseFailureException" , 
+            e.getMessage().contains(Integer.toString(0)));
         }
     }
 
