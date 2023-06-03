@@ -2,14 +2,14 @@ package se.kth.iv1350.pos.controller;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
 import java.util.HashMap;
 
-import se.kth.iv1350.pos.controller.Controller.InventoryFailException;
 import se.kth.iv1350.pos.integration.ItemDTO;
 import se.kth.iv1350.pos.integration.RegisterCreator;
 import se.kth.iv1350.pos.integration.ExternalInventorySystem.DatabaseFailureException;
@@ -24,10 +24,10 @@ public class ControllerTest {
     private Controller controller;
 
     @Before
-    public void setUp(){
+    public void setUp() throws IOException{
         registerCreator = new RegisterCreator();
         printer = new Printer();
-        controller = new Controller(registerCreator, printer);
+        controller = new Controller(registerCreator, printer, "/tmp/test.log", "/tmp/revenue.log");
 
     }
 
@@ -57,17 +57,7 @@ public class ControllerTest {
         saleInformation = controller.getSaleInformation();
         soldItems = saleInformation.getSoldItems();
         beforeSoldQuantity = soldItems.getOrDefault(nonExistentItem, 0);
-
-        try{
-            controller.enterItem(nonExistentItem.getId(), quantity);
-            fail("Could enter a non-existing item.");
-        } catch(ItemNotFoundException e)
-        {
-
-        } catch(InventoryFailException e)
-        {
-            fail("Fail to reach the database for a non-existing item.");
-        }
+        controller.enterItem(nonExistentItem.getId(), quantity);
 
         saleInformation = controller.getSaleInformation();
         soldItems = saleInformation.getSoldItems();
@@ -90,17 +80,8 @@ public class ControllerTest {
         saleInformation = controller.getSaleInformation();
         soldItems = saleInformation.getSoldItems();
         beforeSoldQuantity = soldItems.getOrDefault(chips, 0);
-
+        controller.enterItem(chips.getId(), quantity);
         
-        try{
-            controller.enterItem(chips.getId(), quantity);
-        } catch(ItemNotFoundException e)
-        {
-            fail("Could not find existing item: " + Integer.toString(chips.getId()));
-        } catch(InventoryFailException e)
-        {
-            fail("Fail to reach the database for item: " + Integer.toString(chips.getId()));
-        }
 
         saleInformation = controller.getSaleInformation();
         soldItems = saleInformation.getSoldItems();
@@ -111,7 +92,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void testSendDiscountRequest() throws ItemNotFoundException, InventoryFailException{
+    public void testSendDiscountRequest() throws ItemNotFoundException, DatabaseFailureException{
         int customerId = 1234;
 
         controller.startSale();
@@ -126,7 +107,7 @@ public class ControllerTest {
     }
 
     @Test
-    public void testEndSale() throws ItemNotFoundException, InventoryFailException{
+    public void testEndSale() throws ItemNotFoundException, DatabaseFailureException{
         ItemDTO chips = new ItemDTO(520001, "OLW chips", "250g", 0.2, 30);
         int quantity = 3;
 

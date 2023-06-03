@@ -1,10 +1,9 @@
 package se.kth.iv1350.pos.view;
 
 /**
- * Shows a running total of a sale process of each sale.
+ * Shows a running total of a sale process of each sale in view.
 */
-
-class TotalRevenueView extends RevenueDisplay{
+public class TotalRevenueView extends RevenueDisplay{
 
     protected void writeRevenue(){
         System.out.println("### Current income of total sales is " + Double.toString(totalRevenue) + ". ### "); 

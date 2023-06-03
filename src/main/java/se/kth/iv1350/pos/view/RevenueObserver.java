@@ -14,7 +14,7 @@ public interface RevenueObserver {
 
     /**
      * called when a sale has been ended.
-     * @param saleInformation The sale information of a sale.
+     * @param salePrice The running total price of a sale.
     */
     void completedSale(double salePrice);
 }

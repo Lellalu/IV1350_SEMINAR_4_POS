@@ -3,6 +3,7 @@ package se.kth.iv1350.pos.integration;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 
 import se.kth.iv1350.pos.view.RevenueDisplay;
 
@@ -17,6 +18,16 @@ public class TotalRevenueFileOutput extends RevenueDisplay{
      * Show total revenue in a file.
     */
     protected void writeRevenue(){
-        logFile.println("Total revenue = " + Double.toString(totalRevenue));
+
+        StringBuilder logMsgBuilder = new StringBuilder(); 
+        logMsgBuilder.append("Revenue - "); 
+        logMsgBuilder.append(currentTime() + ": "); 
+        logMsgBuilder.append(Double.toString(totalRevenue));
+        logFile.println(logMsgBuilder.toString());
+    }
+
+    private String currentTime() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        return timestamp.toString();
     }
 }

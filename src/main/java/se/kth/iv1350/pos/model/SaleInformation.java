@@ -1,8 +1,10 @@
 package se.kth.iv1350.pos.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import se.kth.iv1350.pos.integration.ItemDTO;
 import se.kth.iv1350.pos.integration.ExternalInventorySystem.DatabaseFailureException;
+import se.kth.iv1350.pos.view.RevenueObserver;
 import se.kth.iv1350.pos.integration.DiscountDTO;
 import se.kth.iv1350.pos.integration.CustomerDTO;
 import se.kth.iv1350.pos.integration.DiscountRegistry;
@@ -19,7 +21,18 @@ public class SaleInformation {
     private DiscountDTO[] discounts;
     private double totalPrice;
     private HashMap<ItemDTO, Integer> soldItems;
+    private ArrayList<RevenueObserver> revenueObservers = new ArrayList<>();
     
+/**
+ * The specified observer will be notified when a sale
+ * has been ended. There will be notifications only for
+ * sales that are started after this method is called.
+ *
+* @param observer The observer to notify.
+*/
+public void addSaleObserver(RevenueObserver observer) { 
+    revenueObservers.add(observer);
+}
 
 /**
 * Create and initialize the saleInformation.
@@ -84,6 +97,7 @@ public class SaleInformation {
 * @param quantity int of the number of entered item.
 * @param ExternalInventorySystem the external item inventory system.
 * @throws ItemNotFoundException when the entered item identifier can not be found in inventory.
+* @throws DatabaseFailureException when it fails to reach the inventory database.
 */
     public void addItem(int identifier, int quantity, ExternalInventorySystem externalInventorySystem)
     throws ItemNotFoundException, DatabaseFailureException{  
@@ -91,7 +105,6 @@ public class SaleInformation {
 
         if (toBeAddedItem == null) {
             throw new ItemNotFoundException("The item " +Integer.toString(identifier)+ " does not exist in the inventory.");
-            //System.out.println("The item with identifier " + Integer.toString(identifier) + " is invald.");
         }
         int alreadySoldQuantity = soldItems.getOrDefault(toBeAddedItem, 0);
         soldItems.put(toBeAddedItem, alreadySoldQuantity+quantity);
@@ -122,5 +135,16 @@ public class SaleInformation {
         for (DiscountDTO discount : discounts){
             totalPrice *= discount.getType();
         }
+    }
+
+    private void notifyObservers() {
+        for (RevenueObserver obs : revenueObservers) {
+                obs.completedSale(getTotalPrice());
+            }
+    }
+
+    public void saleEnd(){
+        uppdateSaleInformation();
+        notifyObservers();
     }
 }

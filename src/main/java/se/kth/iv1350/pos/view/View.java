@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.util.Random;
 
 import se.kth.iv1350.pos.controller.Controller;
-import se.kth.iv1350.pos.controller.Controller.InventoryFailException;
-import se.kth.iv1350.pos.model.SaleInformation.ItemNotFoundException;
 import se.kth.iv1350.pos.integration.TotalRevenueFileOutput;
 
 /**
@@ -18,8 +16,6 @@ import se.kth.iv1350.pos.integration.TotalRevenueFileOutput;
 */ 
 public class View {
     private Controller controller;
-    private ErrorMessageHandler errorMessageHandler;
-    private LogHandler logHandler;
     
 
 /**
@@ -27,13 +23,9 @@ public class View {
 * @param controller The Controller should be entered.
 * @param logFilename The filename of the log file.
 */
-    public View(Controller controller, String logFilename, String revenueLogFile) throws IOException
+    public View(Controller controller) throws IOException
     {
         this.controller = controller;
-        this.controller.addSaleObserver(new TotalRevenueView());
-        this.controller.addSaleObserver(new TotalRevenueFileOutput(revenueLogFile));
-        this.errorMessageHandler = new ErrorMessageHandler();
-        this.logHandler = new LogHandler(logFilename);
     }
 
 /**
@@ -71,73 +63,24 @@ public class View {
     
             int colaQuantity = ran.nextInt(5);
             System.out.println("The customer buys " + Integer.toString(colaQuantity) + " Cola.");
-            try {
-                controller.enterItem(colaId, colaQuantity);
-            } catch (ItemNotFoundException e) {
-                this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(colaId) + " does not exist");
-                this.logHandler.log("The item " + Integer.toString(colaId) + " does not exist.");
-            } catch(InventoryFailException e){
-                this.errorMessageHandler.showErrorMsg("Fail to reach the database for item: " + Integer.toString(colaId));
-                this.logHandler.log("Fail to reach the databasefor item: " + Integer.toString(colaId));
-            }
+            controller.enterItem(colaId, colaQuantity);
     
             int chipsQuantity = ran.nextInt(5);
             System.out.println("The customer buys " + Integer.toString(chipsQuantity) + " Chips.");
-            try {
-                controller.enterItem(chipsId, chipsQuantity);
-            } catch (ItemNotFoundException e) {
-                this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(chipsId) + " does not exist.");
-                this.logHandler.log("The item " + Integer.toString(chipsId) + " does not exist.");
-            } catch(InventoryFailException e){
-                this.errorMessageHandler.showErrorMsg("Fail to reach the database for item: " + Integer.toString(chipsId));
-                this.logHandler.log("Fail to reach the database for item: " + Integer.toString(chipsId));
-            }
+            controller.enterItem(chipsId, chipsQuantity);
     
             int glassQuantity = ran.nextInt(5);
             System.out.println("The customer buys " + Integer.toString(glassQuantity) + " glass.");
-            try {
-                controller.enterItem(glassId, glassQuantity);
-            } catch (ItemNotFoundException e) {
-                this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(glassId) + " does not exist.");
-                this.logHandler.log("The item " + Integer.toString(glassId) + " does not exist.");
-            } catch(InventoryFailException e){
-                this.errorMessageHandler.showErrorMsg("Fail to reach the database for item: " + Integer.toString(glassId));
-                this.logHandler.log("Fail to reach the database for item: " + Integer.toString(glassId));
-            }
+            controller.enterItem(glassId, glassQuantity);
             
             System.out.println("The customer buys 1 more Hagendas.");
-            try {
-                controller.enterItem(glassId, 1);
-            } catch (ItemNotFoundException e) {
-                this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(glassId) + " does not exist.");
-                this.logHandler.log("The item " + Integer.toString(glassId) + " does not exist.");
-            } catch(InventoryFailException e){
-                this.errorMessageHandler.showErrorMsg("Fail to reach the database for item: " + Integer.toString(glassId));
-                this.logHandler.log("Fail to reach the database for item: " + Integer.toString(glassId));
-            }
+            controller.enterItem(glassId, 1);
     
             System.out.println("The customer buys 1 invalid item.");
-            try {
-                controller.enterItem(nonExistId, 1);
-            } catch (ItemNotFoundException e) {
-                this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(nonExistId) + " does not exist.");
-                this.logHandler.log("The item " + Integer.toString(nonExistId) + " does not exist.");
-            } catch(InventoryFailException e){
-                this.errorMessageHandler.showErrorMsg("Fail to reach the database.");
-                this.logHandler.log("Fail to reach the database for item: " + Integer.toString(nonExistId));
-            }
+            controller.enterItem(nonExistId, 1);
     
             System.out.println("Try to simulate database failed to reach for item " + Integer.toString(failureId));
-            try {
-                controller.enterItem(failureId, 1);
-            } catch (ItemNotFoundException e) {
-                this.errorMessageHandler.showErrorMsg("The item " + Integer.toString(failureId) + " does not exist.");
-                this.logHandler.log("The item " + Integer.toString(failureId) + " does not exist.");
-            } catch(InventoryFailException e){
-                this.errorMessageHandler.showErrorMsg("Fail to reach the database.");
-                this.logHandler.log("Fail to reach the database for item: " + Integer.toString(failureId));
-            }
-    
+            controller.enterItem(failureId, 1);
             
             System.out.println("The customer asks for discounts.");
             controller.sendDiscountRequest(customerId);

@@ -1,3 +1,3 @@
-Total revenue = 148.0
-Total revenue = 391.0
-Total revenue = 629.0
+Revenue - 2023-06-03 23:07:38.867: 80.0
+Revenue - 2023-06-03 23:07:38.87: 246.5
+Revenue - 2023-06-03 23:07:38.871: 396.1

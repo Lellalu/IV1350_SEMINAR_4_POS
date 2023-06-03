@@ -18,8 +18,8 @@ public class Main {
     public static void main(String[] args) throws IOException {
         RegisterCreator registerCreator = new RegisterCreator();
         Printer printer = new Printer();
-        Controller controller = new Controller(registerCreator, printer);
-        View view = new View(controller, args[0], args[1]);
+        Controller controller = new Controller(registerCreator, printer, args[0], args[1]);
+        View view = new View(controller);
         view.runFakeScenario();
     }
 }
