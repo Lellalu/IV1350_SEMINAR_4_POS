@@ -34,7 +34,6 @@ public class Controller {
 * This is the only Controller class in the program, calling all the other methods in model and integration.
 * @param registerCreator This object contains the methods to create new externalInventorySystem, discountRegistry, customerRegistry in controller.
 * @param printer The object Printer which contains the method to print receipt out will be used.
- * @throws IOException
 */
     public Controller (RegisterCreator registerCreator, Printer printer, String logFilename, String revenueLogFile){
         this.externalInventorySystem = registerCreator.getItemRegistry();
@@ -69,7 +68,6 @@ public class Controller {
 /**s
 * Start a new sale with a new initialized SaleInformation.
 * So that sold items can be entered and added during the following sale process.
- * @throws IOException
 */
     public void startSale(){
         saleInformation = new SaleInformation();
@@ -82,7 +80,6 @@ public class Controller {
 * @param identifier The int which is the soldItem ID number will be scanned in.
 * @param quantity The int number which will be entered by view.
 * @return saleInformation The new saleInformation uppdated with new entered items.
-* @throws ItemNotFoundException when the entered item identifier can not be found in inventory.
 */
     public SaleInformation enterItem (int identifier, int quantity)
         {
